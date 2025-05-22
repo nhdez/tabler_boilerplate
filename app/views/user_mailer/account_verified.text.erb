@@ -1,0 +1,17 @@
+Your Account Has Been Verified
+============================
+
+Hello <%= @user.full_name %>,
+
+We're pleased to inform you that your account has been verified by an administrator. You can now log in to access all features of the application.
+
+Account Details:
+- Email: <%= @user.email %>
+- Verified on: <%= @user.verified_at.strftime("%B %d, %Y at %I:%M %p") %>
+
+You can log in now at: <%= @login_url %>
+
+If you have any questions or need assistance, please don't hesitate to contact our support team.
+
+---
+This is an automated message. Please do not reply to this email.

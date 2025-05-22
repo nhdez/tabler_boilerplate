@@ -1,0 +1,33 @@
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 5px;">
+  <h2 style="color: #206bc4; margin-bottom: 20px;">New User Registration</h2>
+  
+  <p>A new user has registered on your site:</p>
+  
+  <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 15px 0;">
+    <p><strong>Name:</strong> <%= @user.full_name %></p>
+    <p><strong>Email:</strong> <%= @user.email %></p>
+    <p><strong>Registered on:</strong> <%= @user.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+  </div>
+  
+  <% if @verification_required %>
+    <p style="margin-top: 20px;">This user requires verification before they can access the system.</p>
+    
+    <p>You can verify this user by clicking the button below:</p>
+    
+    <div style="text-align: center; margin: 25px 0;">
+      <a href="<%= @verification_url %>" style="background-color: #206bc4; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: bold;">
+        Verify User
+      </a>
+    </div>
+    
+    <p style="font-size: 0.9em; color: #666;">
+      Or copy and paste this URL into your browser: <%= @verification_url %>
+    </p>
+  <% else %>
+    <p style="margin-top: 20px;">This user has been automatically verified and can access the system.</p>
+  <% end %>
+  
+  <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eaeaea; font-size: 0.8em; color: #666;">
+    <p>This is an automated message from your application. Please do not reply to this email.</p>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px;">
+  <div style="text-align: center; margin-bottom: 20px;">
+    <h1 style="color: #206bc4; margin-bottom: 10px;"><%= @app_name %></h1>
+    <p style="color: #64748b; font-size: 16px;">
+      <%= @greeting %>
+    </p>
+  </div>
+
+  <div style="background-color: #f8fafc; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+    <p style="margin: 0 0 10px 0; color: #334155; font-size: 14px;">
+      Thank you for signing up. Your account has been created successfully.
+    </p>
+    <p style="margin: 0 0 10px 0; color: #334155; font-size: 14px;">
+      You can sign in using the link below:
+    </p>
+    <div style="text-align: center; margin: 20px 0;">
+      <a href="<%= @login_url %>" style="display: inline-block; padding: 10px 20px; background-color: #206bc4; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">
+        Sign In
+      </a>
+    </div>
+  </div>
+
+  <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb; font-size: 12px; color: #64748b; text-align: center;">
+    <p>If you didn't sign up for this account, please ignore this email.</p>
+  </div>
+</div>

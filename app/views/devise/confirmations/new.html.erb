@@ -1,0 +1,26 @@
+<div class="card card-md">
+  <div class="card-body">
+    <h2 class="h2 text-center mb-4">Resend confirmation instructions</h2>
+    <p class="text-muted text-center mb-4">Enter your email address to receive confirmation instructions.</p>
+    
+    <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post, class: 'mt-3' }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="mb-3">
+        <label class="form-label"><%= f.label :email %></label>
+        <div class="input-group input-group-flat">
+          <span class="input-group-text">
+            <i class="ti ti-mail"></i>
+          </span>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: "form-control", placeholder: "your@email.com" %>
+        </div>
+      </div>
+
+      <div class="form-footer">
+        <%= f.submit "Resend confirmation", class: "btn btn-primary w-100" %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= render "devise/shared/links" %>
+</div>

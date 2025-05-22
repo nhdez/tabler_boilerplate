@@ -1,0 +1,20 @@
+New User Registration
+====================
+
+A new user has registered on your site:
+
+Name: <%= @user.full_name %>
+Email: <%= @user.email %>
+Registered on: <%= @user.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+
+<% if @verification_required %>
+This user requires verification before they can access the system.
+
+You can verify this user by visiting the following URL:
+<%= @verification_url %>
+<% else %>
+This user has been automatically verified and can access the system.
+<% end %>
+
+---
+This is an automated message from your application. Please do not reply to this email.

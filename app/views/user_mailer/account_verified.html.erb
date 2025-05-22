@@ -1,0 +1,24 @@
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 5px;">
+  <h2 style="color: #206bc4; margin-bottom: 20px;">Your Account Has Been Verified</h2>
+  
+  <p>Hello <%= @user.full_name %>,</p>
+  
+  <p>We're pleased to inform you that your account has been verified by an administrator. You can now log in to access all features of the application.</p>
+  
+  <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 15px 0;">
+    <p><strong>Email:</strong> <%= @user.email %></p>
+    <p><strong>Verified on:</strong> <%= @user.verified_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+  </div>
+  
+  <div style="text-align: center; margin: 25px 0;">
+    <a href="<%= @login_url %>" style="background-color: #206bc4; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: bold;">
+      Log In Now
+    </a>
+  </div>
+  
+  <p>If you have any questions or need assistance, please don't hesitate to contact our support team.</p>
+  
+  <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eaeaea; font-size: 0.8em; color: #666;">
+    <p>This is an automated message. Please do not reply to this email.</p>
+  </div>
+</div>

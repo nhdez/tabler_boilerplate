@@ -1,0 +1,195 @@
+<div class="page-header d-print-none">
+  <div class="container-xl">
+    <div class="row g-2 align-items-center">
+      <div class="col">
+        <h2 class="page-title">User Details</h2>
+      </div>
+      <div class="col-auto ms-auto">
+        <div class="btn-list">
+          <%= link_to admin_users_path, class: "btn btn-outline-secondary d-none d-sm-inline-block" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M5 12l14 0" />
+              <path d="M5 12l6 6" />
+              <path d="M5 12l6 -6" />
+            </svg>
+            Back to users
+          <% end %>
+          
+          <%= link_to edit_admin_user_path(@user), class: "btn btn-primary d-none d-sm-inline-block" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+              <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+              <path d="M16 5l3 3" />
+            </svg>
+            Edit user
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="container-xl">
+    <div class="row row-deck row-cards">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">User Information</h3>
+            <div class="card-actions">
+              <% if @user.access_locked? %>
+                <%= button_to toggle_block_admin_user_path(@user), method: :patch, class: "btn btn-success", data: { turbo_confirm: "Are you sure you want to unblock this user?" } do %>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock-open" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M5 11m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" />
+                    <path d="M12 16m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                    <path d="M8 11v-5a4 4 0 0 1 8 0" />
+                  </svg>
+                  Unblock User
+                <% end %>
+              <% else %>
+                <%= button_to toggle_block_admin_user_path(@user), method: :patch, class: "btn btn-danger", data: { turbo_confirm: "Are you sure you want to block this user?" } do %>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M5 11m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" />
+                    <path d="M12 16m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                    <path d="M8 11v-4a4 4 0 0 1 8 0v4" />
+                  </svg>
+                  Block User
+                <% end %>
+              <% end %>
+              
+              <%= button_to admin_user_path(@user), method: :delete, class: "btn btn-outline-danger ms-2", data: { turbo_confirm: "Are you sure you want to delete this user? This action cannot be undone." } do %>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <path d="M4 7l16 0" />
+                  <path d="M10 11l0 6" />
+                  <path d="M14 11l0 6" />
+                  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                </svg>
+                Delete User
+              <% end %>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="d-flex mb-4">
+              <% if @user.avatar.attached? %>
+                <span class="avatar avatar-lg avatar-rounded me-3">
+                  <%= image_tag url_for(@user.avatar), alt: "Avatar" %>
+                </span>
+              <% else %>
+                <span class="avatar avatar-lg avatar-rounded me-3" style="background-color: <%= @user.avatar_color %>; color: #fff; font-size: 1.5rem;">
+                  <%= @user.avatar_letter %>
+                </span>
+              <% end %>
+              <div>
+                <h3 class="mb-0"><%= @user.full_name %></h3>
+                <div class="text-muted"><%= @user.email %></div>
+                <div class="text-muted">User ID: <%= @user.id %></div>
+              </div>
+            </div>
+            <div class="datagrid">
+              <div class="datagrid-item">
+                <div class="datagrid-title">Email</div>
+                <div class="datagrid-content"><%= @user.email %></div>
+              </div>
+              <div class="datagrid-item">
+                <div class="datagrid-title">User ID</div>
+                <div class="datagrid-content"><%= @user.id %></div>
+              </div>
+              <div class="datagrid-item">
+                <div class="datagrid-title">First Name</div>
+                <div class="datagrid-content"><%= @user.first_name.present? ? @user.first_name : "—" %></div>
+              </div>
+              <div class="datagrid-item">
+                <div class="datagrid-title">Last Name</div>
+                <div class="datagrid-content"><%= @user.last_name.present? ? @user.last_name : "—" %></div>
+              </div>
+              <div class="datagrid-item">
+                <div class="datagrid-title">Birthdate</div>
+                <div class="datagrid-content">
+                  <% if @user.birthdate.present? %>
+                    <%= @user.birthdate.strftime("%B %d, %Y") %>
+                    <span class="text-muted">(<%= ((Date.today - @user.birthdate).to_i / 365.25).to_i %> years old)</span>
+                  <% else %>
+                    —
+                  <% end %>
+                </div>
+              </div>
+              <div class="datagrid-item">
+                <div class="datagrid-title">Created at</div>
+                <div class="datagrid-content"><%= @user.created_at.strftime("%Y-%m-%d %H:%M:%S") %></div>
+              </div>
+              <div class="datagrid-item">
+                <div class="datagrid-title">Last updated</div>
+                <div class="datagrid-content"><%= @user.updated_at.strftime("%Y-%m-%d %H:%M:%S") %></div>
+              </div>
+              <div class="datagrid-item">
+                <div class="datagrid-title">Status</div>
+                <div class="datagrid-content">
+                  <% if @user.access_locked? %>
+                    <span class="status status-red">Blocked</span>
+                  <% else %>
+                    <span class="status status-green">Active</span>
+                  <% end %>
+                </div>
+              </div>
+              <div class="datagrid-item">
+                <div class="datagrid-title">Roles</div>
+                <div class="datagrid-content">
+                  <% if @user.roles.any? %>
+                    <% @user.roles.each do |role| %>
+                      <% case role.name %>
+                      <% when "admin" %>
+                        <span class="badge bg-purple-lt">Admin</span>
+                      <% when "manager" %>
+                        <span class="badge bg-azure-lt">Manager</span>
+                      <% when "editor" %>
+                        <span class="badge bg-indigo-lt">Editor</span>
+                      <% when "contributor" %>
+                        <span class="badge bg-teal-lt">Contributor</span>
+                      <% when "viewer" %>
+                        <span class="badge bg-green-lt">Viewer</span>
+                      <% else %>
+                        <span class="badge bg-secondary-lt"><%= role.name.capitalize %></span>
+                      <% end %>
+                    <% end %>
+                  <% else %>
+                    <span class="badge bg-secondary-lt">No roles assigned</span>
+                  <% end %>
+                </div>
+              </div>
+              <% if @user.access_locked? %>
+                <div class="datagrid-item">
+                  <div class="datagrid-title">Blocked at</div>
+                  <div class="datagrid-content"><%= @user.locked_at&.strftime("%Y-%m-%d %H:%M:%S") %></div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-12 mt-3">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Recent Activity</h3>
+          </div>
+          <div class="card-body">
+            <div class="empty">
+              <div class="empty-img"><img src="https://preview.tabler.io/static/illustrations/undraw_printing_invoices_5r4r.svg" height="128" alt="">
+              </div>
+              <p class="empty-title">No activity recorded yet</p>
+              <p class="empty-subtitle text-muted">
+                Activity tracking is not implemented in this version
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

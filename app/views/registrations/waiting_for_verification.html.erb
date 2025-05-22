@@ -1,0 +1,71 @@
+<div class="page page-center">
+  <div class="container container-tight py-4">
+    <div class="text-center mb-4">
+      <a href="<%= root_path %>" class="navbar-brand navbar-brand-autodark">
+        <%= image_tag 'logo.svg', alt: 'Tabler Boilerplate', width: 110, height: 32 %>
+      </a>
+    </div>
+    
+    <div class="card card-md">
+      <div class="card-body text-center py-4">
+        <div class="mb-4">
+          <span class="avatar avatar-xl bg-blue-lt mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail-check" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M11 19h-6a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v6"></path>
+              <path d="M3 7l9 6l9 -6"></path>
+              <path d="M15 19l2 2l4 -4"></path>
+            </svg>
+          </span>
+          <h3 class="card-title">Verification Required</h3>
+          <p class="text-muted">Thank you for registering! Your account is pending verification.</p>
+        </div>
+        
+        <div class="card-body">
+          <div class="mb-3">
+            <div class="steps steps-counter steps-blue">
+              <div class="step-item active">
+                <div class="text-muted">Registration Complete</div>
+              </div>
+              <div class="step-item">
+                <div class="text-muted">Admin Verification</div>
+              </div>
+              <div class="step-item">
+                <div class="text-muted">Account Activated</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="alert alert-info" role="alert">
+            <div class="d-flex">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M12 9h.01"></path>
+                  <path d="M11 12h1v4h1"></path>
+                  <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="alert-title">What happens next?</h4>
+                <div class="text-muted">
+                  <p>An administrator has been notified of your registration and will review your account.</p>
+                  <p>Once your account is verified, you'll receive an email notification.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="text-center mt-4">
+            <p>If you have any questions, please contact support.</p>
+            <%= link_to 'Return to Login', new_user_session_path, class: 'btn btn-primary w-100' %>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="text-center text-muted mt-3">
+      Already have an account? <%= link_to 'Sign in', new_user_session_path %>
+    </div>
+  </div>
+</div>

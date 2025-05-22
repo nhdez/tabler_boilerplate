@@ -1,0 +1,158 @@
+<div class="page-header d-print-none">
+  <div class="container-xl">
+    <div class="row g-2 align-items-center">
+      <div class="col">
+        <h2 class="page-title">User Management</h2>
+      </div>
+      <div class="col-auto ms-auto">
+        <div class="btn-list">
+          <%= link_to new_admin_user_path, class: "btn btn-primary d-none d-sm-inline-block" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M12 5l0 14" />
+              <path d="M5 12l14 0" />
+            </svg>
+            Create new user
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="container-xl">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">All users</h3>
+      </div>
+      <div class="card-body border-bottom py-3">
+        <div class="d-flex">
+          <div class="text-muted">
+            Show
+            <div class="mx-2 d-inline-block">
+              <input type="text" class="form-control form-control-sm" value="10" size="3" aria-label="Users count">
+            </div>
+            entries
+          </div>
+          <div class="ms-auto text-muted">
+            Search:
+            <div class="ms-2 d-inline-block">
+              <input type="text" class="form-control form-control-sm" aria-label="Search users">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table card-table table-vcenter text-nowrap datatable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>User</th>
+              <th>Name</th>
+              <th>Created</th>
+              <th>Roles</th>
+              <th>Status</th>
+              <th class="w-1"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td><span class="text-muted"><%= user.id %></span></td>
+                <td class="d-flex align-items-center">
+                  <% if user.avatar.attached? %>
+                    <span class="avatar avatar-sm avatar-rounded me-2">
+                      <%= image_tag url_for(user.avatar), alt: "Avatar" %>
+                    </span>
+                  <% else %>
+                    <span class="avatar avatar-sm avatar-rounded me-2" style="background-color: <%= user.avatar_color %>; color: #fff;">
+                      <%= user.avatar_letter %>
+                    </span>
+                  <% end %>
+                  <%= user.email %>
+                </td>
+                <td><%= user.first_name.present? || user.last_name.present? ? user.full_name : "—" %></td>
+                <td><%= user.created_at.strftime("%Y-%m-%d") %></td>
+                <td>
+                  <% if user.roles.any? %>
+                    <% user.roles.each do |role| %>
+                      <% case role.name %>
+                      <% when "admin" %>
+                        <span class="badge bg-purple-lt">Admin</span>
+                      <% when "manager" %>
+                        <span class="badge bg-azure-lt">Manager</span>
+                      <% when "editor" %>
+                        <span class="badge bg-indigo-lt">Editor</span>
+                      <% when "contributor" %>
+                        <span class="badge bg-teal-lt">Contributor</span>
+                      <% when "viewer" %>
+                        <span class="badge bg-green-lt">Viewer</span>
+                      <% else %>
+                        <span class="badge bg-secondary-lt"><%= role.name.capitalize %></span>
+                      <% end %>
+                    <% end %>
+                  <% else %>
+                    <span class="badge bg-secondary-lt">No roles</span>
+                  <% end %>
+                </td>
+                <td>
+                  <% if user.access_locked? %>
+                    <span class="status status-red">Blocked</span>
+                  <% else %>
+                    <span class="status status-green">Active</span>
+                  <% end %>
+                </td>
+                <td>
+                  <div class="btn-list flex-nowrap">
+                    <%= link_to admin_user_path(user), class: "btn btn-sm btn-info" do %>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                        <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                      </svg>
+                      View
+                    <% end %>
+                    <%= link_to edit_admin_user_path(user), class: "btn btn-sm btn-primary" do %>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                        <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                        <path d="M16 5l3 3" />
+                      </svg>
+                      Edit
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer d-flex align-items-center">
+        <p class="m-0 text-muted">Showing <span><%= @users.count %></span> entries</p>
+        <ul class="pagination m-0 ms-auto">
+          <li class="page-item">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M15 6l-6 6l6 6" />
+              </svg>
+              prev
+            </a>
+          </li>
+          <li class="page-item active"><a class="page-link" href="#">1</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">
+              next
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M9 6l6 6l-6 6" />
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

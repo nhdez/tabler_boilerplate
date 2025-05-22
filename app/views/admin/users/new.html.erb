@@ -1,0 +1,143 @@
+<div class="page-header d-print-none">
+  <div class="container-xl">
+    <div class="row g-2 align-items-center">
+      <div class="col">
+        <h2 class="page-title">Create New User</h2>
+      </div>
+      <div class="col-auto ms-auto">
+        <div class="btn-list">
+          <%= link_to admin_users_path, class: "btn btn-outline-secondary d-none d-sm-inline-block" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M5 12l14 0" />
+              <path d="M5 12l6 6" />
+              <path d="M5 12l6 -6" />
+            </svg>
+            Back to users
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="container-xl">
+    <div class="row row-deck row-cards">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">User Information</h3>
+          </div>
+          <div class="card-body">
+            <%= form_with(model: [:admin, @user], local: true, class: "form") do |form| %>
+              <% if @user.errors.any? %>
+                <div class="alert alert-danger" role="alert">
+                  <h4><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h4>
+                  <ul>
+                    <% @user.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+
+              <h3 class="mb-3">Personal Information</h3>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <%= form.label :first_name, class: "form-label" %>
+                  <%= form.text_field :first_name, class: "form-control", placeholder: "First name" %>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                  <%= form.label :last_name, class: "form-label" %>
+                  <%= form.text_field :last_name, class: "form-control", placeholder: "Last name" %>
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <%= form.label :birthdate, class: "form-label" %>
+                <%= form.date_field :birthdate, class: "form-control", placeholder: "YYYY-MM-DD" %>
+                <div class="form-hint">Format: YYYY-MM-DD (e.g., 1990-01-01)</div>
+              </div>
+              
+              <h3 class="mb-3">Account Information</h3>
+              
+              <div class="mb-3">
+                <%= form.label :email, class: "form-label required" %>
+                <%= form.email_field :email, class: "form-control", required: true, placeholder: "Email address" %>
+              </div>
+
+              <div class="mb-3">
+                <div class="form-label">Password Options</div>
+                <div class="form-check">
+                  <%= check_box_tag :generate_password, "1", false, class: "form-check-input", id: "generate_password", data: { bs_toggle: "collapse", bs_target: "#password-fields" } %>
+                  <label class="form-check-label" for="generate_password">
+                    Generate random password and display after creation
+                  </label>
+                </div>
+              </div>
+
+              <div class="collapse show" id="password-fields">
+                <div class="mb-3">
+                  <%= form.label :password, class: "form-label required" %>
+                  <%= form.password_field :password, class: "form-control", required: true, placeholder: "Password" %>
+                </div>
+
+                <div class="mb-3">
+                  <%= form.label :password_confirmation, class: "form-label required" %>
+                  <%= form.password_field :password_confirmation, class: "form-control", required: true, placeholder: "Confirm password" %>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <div class="form-label">User Roles</div>
+                <div class="card">
+                  <div class="card-body">
+                    <p class="text-muted small mb-3">
+                      Select one or more roles to assign to this user. If no role is selected, 
+                      the user will be assigned the 'Viewer' role by default.
+                    </p>
+                    <% User.available_roles.each do |role| %>
+                      <label class="form-check mb-2">
+                        <%= check_box_tag "roles[#{role[:name]}]", "1", false, class: "form-check-input" %>
+                        <span class="form-check-label fw-bold"><%= role[:name].capitalize %></span>
+                        <span class="form-check-description text-muted"><%= role[:description] %></span>
+                      </label>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-footer">
+                <%= form.submit "Create User", class: "btn btn-primary" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const generatePasswordCheckbox = document.getElementById('generate_password');
+    const passwordFields = document.getElementById('password-fields');
+    const passwordInput = document.querySelector('input[name="user[password]"]');
+    const passwordConfirmationInput = document.querySelector('input[name="user[password_confirmation]"]');
+    
+    generatePasswordCheckbox.addEventListener('change', function() {
+      if (this.checked) {
+        passwordFields.classList.remove('show');
+        passwordInput.removeAttribute('required');
+        passwordConfirmationInput.removeAttribute('required');
+      } else {
+        passwordFields.classList.add('show');
+        passwordInput.setAttribute('required', 'required');
+        passwordConfirmationInput.setAttribute('required', 'required');
+      }
+    });
+  });
+</script>

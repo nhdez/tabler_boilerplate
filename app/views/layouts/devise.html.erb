@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html data-bs-theme="light">
+  <head>
+    <title><%= content_for(:title) || "Tabler Boilerplate" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%= vite_client_tag %>
+  </head>
+
+  <body class="border-top-wide border-primary d-flex flex-column">
+    <div class="page page-center">
+      <div class="container container-tight py-4">
+        <div class="text-center mb-4">
+          <a href="/" class="navbar-brand navbar-brand-autodark">
+            <h1>Tabler Boilerplate</h1>
+          </a>
+          <div class="d-flex justify-content-center mt-3 gap-2">
+            <a href="#" class="btn btn-icon btn-sm hide-theme-dark" title="Enable dark mode" data-bs-toggle="theme" data-bs-theme-value="dark" data-bs-tooltip="tooltip">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+              </svg>
+            </a>
+            <a href="#" class="btn btn-icon btn-sm hide-theme-light" title="Enable light mode" data-bs-toggle="theme" data-bs-theme-value="light" data-bs-tooltip="tooltip">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
+                <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path>
+              </svg>
+            </a>
+            <a href="#" class="btn btn-icon btn-sm" title="Use system setting" data-bs-toggle="theme" data-bs-theme-value="auto" data-bs-tooltip="tooltip">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-desktop" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M3 5a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-10z"></path>
+                <path d="M7 20h10"></path>
+                <path d="M9 16v4"></path>
+                <path d="M15 16v4"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <% if notice %>
+          <div class="alert alert-success" role="alert">
+            <%= notice %>
+          </div>
+        <% end %>
+        
+        <% if alert %>
+          <div class="alert alert-danger" role="alert">
+            <%= alert %>
+          </div>
+        <% end %>
+
+        <%= yield %>
+      </div>
+    </div>
+
+    <%= vite_javascript_tag "entrypoints/application" %>
+  </body>
+</html>

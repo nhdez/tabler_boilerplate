@@ -1,0 +1,76 @@
+<div class="container py-4">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Send Test Email</h3>
+    </div>
+    <div class="card-body">
+      <p class="text-muted mb-4">Enter an email address to send a test email and verify your email configuration.</p>
+      
+      <%= form_with url: test_emails_path, method: :post, class: "mt-3" do |f| %>
+        <div class="mb-3">
+          <label class="form-label">Email Address</label>
+          <div class="input-group input-group-flat">
+            <span class="input-group-text">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"></path>
+                <path d="M3 7l9 6l9 -6"></path>
+              </svg>
+            </span>
+            <%= f.email_field :email, class: "form-control", placeholder: "your@email.com", required: true %>
+          </div>
+        </div>
+
+        <div class="form-footer">
+          <%= f.submit "Send Test Email", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+      
+      <div class="mt-4">
+        <h4>Email Configuration</h4>
+        <div class="table-responsive">
+          <table class="table table-vcenter">
+            <thead>
+              <tr>
+                <th>Setting</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Delivery Method</td>
+                <td>
+                  <code><%= Rails.application.config.action_mailer.delivery_method %></code>
+                  <% if Rails.env.development? %>
+                    <% if ENV.fetch('USE_REAL_EMAIL', 'false') == 'true' %>
+                      <span class="badge bg-success ms-2">Real Email Delivery</span>
+                    <% else %>
+                      <span class="badge bg-info ms-2">Using Letter Opener</span>
+                      <small class="d-block text-muted mt-1">Set USE_REAL_EMAIL=true in .env to send real emails</small>
+                    <% end %>
+                  <% end %>
+                </td>
+              </tr>
+              <tr>
+                <td>SMTP Address</td>
+                <td><code><%= ENV.fetch('SMTP_ADDRESS', 'Not configured') %></code></td>
+              </tr>
+              <tr>
+                <td>SMTP Port</td>
+                <td><code><%= ENV.fetch('SMTP_PORT', 'Not configured') %></code></td>
+              </tr>
+              <tr>
+                <td>SMTP Domain</td>
+                <td><code><%= ENV.fetch('SMTP_DOMAIN', 'Not configured') %></code></td>
+              </tr>
+              <tr>
+                <td>From Address</td>
+                <td><code><%= ENV.fetch('MAIL_FROM', 'noreply@example.com') %></code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

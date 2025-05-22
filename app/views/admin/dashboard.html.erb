@@ -1,0 +1,232 @@
+<div class="page-header d-print-none">
+  <div class="container-xl">
+    <div class="row g-2 align-items-center">
+      <div class="col">
+        <h2 class="page-title">Admin Dashboard</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="container-xl">
+    <div class="row row-deck row-cards">
+      <div class="col-sm-6 col-lg-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="subheader">Users</div>
+            </div>
+            <div class="h1 mb-3"><%= @users_count %></div>
+            <div class="d-flex mb-2">
+              <div>Total registered users</div>
+            </div>
+            <div class="progress progress-sm">
+              <div class="progress-bar bg-primary" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" aria-label="100% Complete">
+                <span class="visually-hidden">100% Complete</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-sm-6 col-lg-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="subheader">Active Users</div>
+            </div>
+            <div class="h1 mb-3"><%= @active_users_count %></div>
+            <div class="d-flex mb-2">
+              <div>Unblocked user accounts</div>
+            </div>
+            <div class="progress progress-sm">
+              <div class="progress-bar bg-green" style="width: <%= @users_count > 0 ? (@active_users_count.to_f / @users_count * 100).to_i : 0 %>%" role="progressbar" aria-valuenow="<%= @active_users_count %>" aria-valuemin="0" aria-valuemax="<%= @users_count %>" aria-label="<%= @active_users_count %> Active">
+                <span class="visually-hidden"><%= @active_users_count %> Active</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-sm-6 col-lg-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="subheader">Admins</div>
+            </div>
+            <div class="h1 mb-3"><%= @admins_count %></div>
+            <div class="d-flex mb-2">
+              <div>Users with admin role</div>
+            </div>
+            <div class="progress progress-sm">
+              <div class="progress-bar bg-azure" style="width: <%= @users_count > 0 ? (@admins_count.to_f / @users_count * 100).to_i : 0 %>%" role="progressbar" aria-valuenow="<%= @admins_count %>" aria-valuemin="0" aria-valuemax="<%= @users_count %>" aria-label="<%= @admins_count %> Admins">
+                <span class="visually-hidden"><%= @admins_count %> Admins</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-sm-6 col-lg-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="subheader">System</div>
+            </div>
+            <div class="h1 mb-3">Ruby <%= RUBY_VERSION %></div>
+            <div class="d-flex mb-2">
+              <div>Rails <%= Rails.version %></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-sm-6 col-lg-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="subheader">Environment</div>
+            </div>
+            <div class="h1 mb-3"><%= Rails.env.capitalize %></div>
+            <div class="d-flex mb-2">
+              <div>Application mode</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">User Roles Distribution</h3>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="mb-3">
+                  <div class="progress mb-2" style="height: 20px;">
+                    <div class="progress-bar bg-purple" style="width: <%= @users_count > 0 ? (@admins_count.to_f / @users_count * 100) : 0 %>%" role="progressbar" aria-label="Admins">
+                      <% if @admins_count > 0 %>Admins (<%= @admins_count %>)<% end %>
+                    </div>
+                    <div class="progress-bar bg-azure" style="width: <%= @users_count > 0 ? (@managers_count.to_f / @users_count * 100) : 0 %>%" role="progressbar" aria-label="Managers">
+                      <% if @managers_count > 0 %>Managers (<%= @managers_count %>)<% end %>
+                    </div>
+                    <div class="progress-bar bg-indigo" style="width: <%= @users_count > 0 ? (@editors_count.to_f / @users_count * 100) : 0 %>%" role="progressbar" aria-label="Editors">
+                      <% if @editors_count > 0 %>Editors (<%= @editors_count %>)<% end %>
+                    </div>
+                    <div class="progress-bar bg-teal" style="width: <%= @users_count > 0 ? (@contributors_count.to_f / @users_count * 100) : 0 %>%" role="progressbar" aria-label="Contributors">
+                      <% if @contributors_count > 0 %>Contributors (<%= @contributors_count %>)<% end %>
+                    </div>
+                    <div class="progress-bar bg-green" style="width: <%= @users_count > 0 ? (@viewers_count.to_f / @users_count * 100) : 0 %>%" role="progressbar" aria-label="Viewers">
+                      <% if @viewers_count > 0 %>Viewers (<%= @viewers_count %>)<% end %>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-auto d-flex align-items-center pe-2">
+                    <span class="legend me-2 bg-purple"></span>
+                    <span>Admins</span>
+                    <span class="d-none d-md-inline ms-2 text-muted">(<%= @admins_count %>)</span>
+                  </div>
+                  <div class="col-auto d-flex align-items-center px-2">
+                    <span class="legend me-2 bg-azure"></span>
+                    <span>Managers</span>
+                    <span class="d-none d-md-inline ms-2 text-muted">(<%= @managers_count %>)</span>
+                  </div>
+                  <div class="col-auto d-flex align-items-center px-2">
+                    <span class="legend me-2 bg-indigo"></span>
+                    <span>Editors</span>
+                    <span class="d-none d-md-inline ms-2 text-muted">(<%= @editors_count %>)</span>
+                  </div>
+                  <div class="col-auto d-flex align-items-center px-2">
+                    <span class="legend me-2 bg-teal"></span>
+                    <span>Contributors</span>
+                    <span class="d-none d-md-inline ms-2 text-muted">(<%= @contributors_count %>)</span>
+                  </div>
+                  <div class="col-auto d-flex align-items-center px-2">
+                    <span class="legend me-2 bg-green"></span>
+                    <span>Viewers</span>
+                    <span class="d-none d-md-inline ms-2 text-muted">(<%= @viewers_count %>)</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="alert alert-info" role="alert">
+                  <h4 class="alert-title">Manage User Roles</h4>
+                  <div class="text-muted">Users can have multiple roles with different permissions</div>
+                  <div class="mt-3">
+                    <a href="<%= admin_users_path %>" class="btn btn-sm btn-info">
+                      User Management
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Admin Tools</h3>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <a href="<%= new_test_email_path %>" class="card card-link card-link-pop">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-auto">
+                        <div class="icon-md rounded text-primary">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"></path>
+                            <path d="M3 7l9 6l9 -6"></path>
+                          </svg>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <h3 class="card-title">Test Email Delivery</h3>
+                        <p class="text-muted">Send a test email to verify your email configuration</p>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              
+              <div class="col-md-6">
+                <a href="<%= admin_users_path %>" class="card card-link card-link-pop">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-auto">
+                        <div class="icon-md rounded text-primary">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
+                            <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path>
+                          </svg>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <h3 class="card-title">User Management</h3>
+                        <p class="text-muted">Manage user accounts, roles, and access control</p>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,106 @@
+<div class="page-header d-print-none">
+  <div class="container-xl">
+    <div class="row g-2 align-items-center">
+      <div class="col">
+        <h2 class="page-title">Pending User Verifications</h2>
+        <div class="text-muted mt-1">Users waiting for admin approval</div>
+      </div>
+      <div class="col-auto ms-auto">
+        <div class="btn-list">
+          <%= link_to admin_users_path, class: "btn btn-outline-primary d-none d-sm-inline-block" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
+              <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path>
+            </svg>
+            All Users
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="container-xl">
+    <% if @users.any? %>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Users Awaiting Verification</h3>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-vcenter card-table">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Email</th>
+                <th>Registered</th>
+                <th class="w-1">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @users.each do |user| %>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <% if user.avatar.attached? %>
+                        <span class="avatar avatar-sm avatar-rounded me-2">
+                          <%= image_tag url_for(user.avatar), alt: "Avatar" %>
+                        </span>
+                      <% else %>
+                        <span class="avatar avatar-sm avatar-rounded me-2" style="background-color: <%= user.avatar_color %>;">
+                          <%= user.avatar_letter %>
+                        </span>
+                      <% end %>
+                      <div>
+                        <div class="font-weight-medium"><%= user.full_name %></div>
+                        <div class="text-muted"><%= time_ago_in_words(user.created_at) %> ago</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div><%= user.email %></div>
+                  </td>
+                  <td>
+                    <div><%= user.created_at.strftime("%b %d, %Y") %></div>
+                    <div class="text-muted"><%= user.created_at.strftime("%I:%M %p") %></div>
+                  </td>
+                  <td>
+                    <div class="btn-list flex-nowrap">
+                      <%= link_to verify_user_path(token: user.verification_token), 
+                                  class: "btn btn-sm btn-success", 
+                                  data: { turbo_method: :get, turbo_confirm: "Are you sure you want to verify #{user.email}?" } do %>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                          <path d="M5 12l5 5l10 -10"></path>
+                        </svg>
+                        Verify
+                      <% end %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% else %>
+      <div class="empty">
+        <div class="empty-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-check" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
+            <path d="M6 21v-2a4 4 0 0 1 4 -4h4"></path>
+            <path d="M15 19l2 2l4 -4"></path>
+          </svg>
+        </div>
+        <p class="empty-title">No pending verifications</p>
+        <p class="empty-subtitle text-muted">
+          There are no new users waiting for verification at this time.
+        </p>
+      </div>
+    <% end %>
+  </div>
+</div>
